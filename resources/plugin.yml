@@ -1,0 +1,8 @@
+name: MineFlag
+main: net.stuntguy3000.mineflag.MineFlag
+authors: [stuntguy3000, kreashenz, keto23]
+version: 0.1
+commands:
+    MineFlag:
+        description: MineFlag Main Command. Type /MineFlag help for command usage.
+        aliases: [mf]
