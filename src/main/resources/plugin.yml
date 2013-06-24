@@ -1,5 +1,5 @@
 name: MineFlag
-main net.stuntguy3000.MineFlag
+main: net.stuntguy3000.MineFlag
 authors: [stuntguy3000, kreashenz, keto23]
 version: maven-version-number
 website: www.stuntguy3000.net
