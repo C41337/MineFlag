@@ -23,7 +23,8 @@ target/
 /*/dist/
 /*/manifest.mf
 /release
-/bin
+bin/
+bin1/
 
 # Mac filesystem dust
 .DS_Store
