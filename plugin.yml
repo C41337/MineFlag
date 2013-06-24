@@ -1,0 +1,9 @@
+name: MineFlag
+main net.stuntguy3000.MFPlugin
+authors: [stuntguy3000, kreashenz]
+version: 0.1
+website: www.stuntguy3000.net
+commands:
+    MineFlag:
+        description: MineFlag Main Command. Use /mf help for help.
+        aliases: [mf]
