@@ -1,7 +1,7 @@
 name: MineFlag
-main net.stuntguy3000.MineFlag
-authors: [stuntguy3000, kreashenz, keto23]
-version: maven-version-number
+main: net.stuntguy3000.MFPlugin
+authors: [stuntguy3000, kreashenz]
+version: 0.1
 website: www.stuntguy3000.net
 commands:
     MineFlag:
