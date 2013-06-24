@@ -5,5 +5,5 @@ version: 0.1
 website: www.stuntguy3000.net
 commands:
     MineFlag:
-        description: MineFlag Main Command.
+        description: MineFlag Main Command. Type /MineFlag help for command usage.
         aliases: [mf]
