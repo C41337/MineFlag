@@ -1,8 +1,0 @@
-General:
-    UseMySQL: true
-    Debug: false
-MySQL:
-   Host: 'localhost'
-   Name: 'minecraft'
-   User: 'root'
-   Pass: 'securepassword'
