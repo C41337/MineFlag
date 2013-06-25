@@ -36,8 +36,8 @@ public class MFCommand implements CommandExecutor {
 					}
 				}
 				
-				p.sendMessage(plugin.util.c(plugin.util.MessagePrefix + plugin.getDescription().getDescription()));
-				p.sendMessage(plugin.util.c(plugin.util.MessagePrefix + plugin.getDescription().getWebsite()));
+				p.sendMessage(plugin.util.c(plugin.util.MessagePrefix + "&6" + plugin.getDescription().getDescription()));
+				p.sendMessage(plugin.util.c(plugin.util.MessagePrefix + "&e" + plugin.getDescription().getWebsite()));
 				p.sendMessage(plugin.util.c(plugin.util.MessagePrefix + "&9Version: &b" + plugin.getDescription().getVersion()));
 				p.sendMessage(plugin.util.c(plugin.util.MessagePrefix + "&9Created by: &b" + Authors));
 				p.sendMessage(plugin.util.c(plugin.util.MessagePrefix + "&cFor commands: Type /mf help"));
@@ -47,8 +47,17 @@ public class MFCommand implements CommandExecutor {
 			
 			if (args.length == 1)
 			{
-				
+				if (args[0].equalsIgnoreCase("help"))
+				{
+					p.sendMessage(plugin.util.c(plugin.util.MessagePrefix + "&eThe help menu is seperated into sections."));
+					p.sendMessage(plugin.util.c(plugin.util.MessagePrefix + "&6/mf help arena &8-&e All arena related commands"));
+					p.sendMessage(plugin.util.c(plugin.util.MessagePrefix + "&6/mf help game &8-&e All game related commands"));
+					p.sendMessage(plugin.util.c(plugin.util.MessagePrefix + "&6/mf help other &8-&e All other commands"));
+					return true;
+				}
 			}
+			
+			p.sendMessage(plugin.util.c(plugin.util.MessagePrefix + "&cInvalid command! Type /mf help for command help."));
 			
 		} else {
 			// Comming soon.

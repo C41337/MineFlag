@@ -1,6 +1,7 @@
 package net.stuntguy3000;
 
 import net.stuntguy3000.command.MFCommand;
+import net.stuntguy3000.enums.LogType;
 
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
