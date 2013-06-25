@@ -1,6 +1,7 @@
-General:
+Vairous:
     UseMySQL: true
     Debug: false
+    ShowPermissionNeeded: true
 MySQL:
    Host: 'localhost'
    Name: 'minecraft'
