@@ -1,12 +1,10 @@
 package net.stuntguy3000.command;
-
 import net.stuntguy3000.MFPlugin;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
 
 public class MFCommand implements CommandExecutor {
 	public MFPlugin plugin;
@@ -16,7 +14,6 @@ public class MFCommand implements CommandExecutor {
 		this.plugin = instance;
 	}
 	
-	@EventHandler
 	public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
 		if (sender instanceof Player)
 		{
@@ -39,9 +36,8 @@ public class MFCommand implements CommandExecutor {
 					}
 				}
 				
-				p.sendMessage(plugin.util.c(plugin.util.MessagePrefix + "&e" + plugin.getDescription().getDescription()));
-				p.sendMessage(plugin.util.c(plugin.util.MessagePrefix + "&6Want this plugin? Download it now!"));
-				p.sendMessage(plugin.util.c(plugin.util.MessagePrefix + "&b" + plugin.getDescription().getWebsite()));
+				p.sendMessage(plugin.util.c(plugin.util.MessagePrefix + plugin.getDescription().getDescription()));
+				p.sendMessage(plugin.util.c(plugin.util.MessagePrefix + plugin.getDescription().getWebsite()));
 				p.sendMessage(plugin.util.c(plugin.util.MessagePrefix + "&9Version: &b" + plugin.getDescription().getVersion()));
 				p.sendMessage(plugin.util.c(plugin.util.MessagePrefix + "&9Created by: &b" + Authors));
 				p.sendMessage(plugin.util.c(plugin.util.MessagePrefix + "&cFor commands: Type /mf help"));
@@ -55,7 +51,7 @@ public class MFCommand implements CommandExecutor {
 			}
 			
 		} else {
-			//Console commands comming after main ones are done (or layed out)
+			// Comming soon.
 		}
 		
 		return false;
