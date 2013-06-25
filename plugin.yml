@@ -2,7 +2,8 @@ name: MineFlag
 main: net.stuntguy3000.MFPlugin
 authors: [stuntguy3000, kreashenz]
 version: 0.1
-website: www.stuntguy3000.net
+website: http://dev.bukkit.org/bukkit-plugins/mineflag
+description: MineFlag is a CTF-style Bukkit plugin!
 commands:
     MineFlag:
         description: MineFlag Main Command. Use /mf help for help.
