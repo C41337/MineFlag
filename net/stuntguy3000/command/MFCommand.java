@@ -49,15 +49,46 @@ public class MFCommand implements CommandExecutor {
 			{
 				if (args[0].equalsIgnoreCase("help"))
 				{
-					p.sendMessage(plugin.util.c(plugin.util.MessagePrefix + "&eThe help menu is seperated into sections."));
+					p.sendMessage(plugin.util.c(plugin.util.MessagePrefix + "&bThe help menu is seperated into sections."));
 					p.sendMessage(plugin.util.c(plugin.util.MessagePrefix + "&6/mf help arena &8-&e All arena related commands"));
 					p.sendMessage(plugin.util.c(plugin.util.MessagePrefix + "&6/mf help game &8-&e All game related commands"));
 					p.sendMessage(plugin.util.c(plugin.util.MessagePrefix + "&6/mf help other &8-&e All other commands"));
 					return true;
 				}
+			} else if (args.length == 2)
+			{
+				//Here we go!
+				if (args[0].equalsIgnoreCase("help") || args[1].equalsIgnoreCase("arena"))
+				{
+					p.sendMessage(plugin.util.c(plugin.util.MessagePrefix + "&bArena Commands:"));
+					p.sendMessage(plugin.util.c(plugin.util.MessagePrefix + "&6/mf arena create <ArenaName> &8-&e Create an arena."));
+					p.sendMessage(plugin.util.c(plugin.util.MessagePrefix + "&6/mf arena remove <ArenaName> &8-&e Remove an arena."));
+					p.sendMessage(plugin.util.c(plugin.util.MessagePrefix + "&6/mf arena list &8-&e List all the arenas."));
+					p.sendMessage(plugin.util.c(plugin.util.MessagePrefix + "&6/mf arena setspawn <ArenaName> <Red/Blue> &8-&e Set an arena's team spawn point."));
+					p.sendMessage(plugin.util.c(plugin.util.MessagePrefix + "&6/mf arena setblock <ArenaName> <Red/Blue> &8-&e Set an arena's target block."));
+					p.sendMessage(plugin.util.c(plugin.util.MessagePrefix + "&6/mf arena setname <ArenaName> <Name> &8-&e Change an Arena's Name."));
+					p.sendMessage(plugin.util.c(plugin.util.MessagePrefix + "&6/mf arena check <ArenaName> &8-&e View an arena's information."));
+					return true;
+				}
+				
+				if (args[0].equalsIgnoreCase("help") || args[1].equalsIgnoreCase("game"))
+				{
+					p.sendMessage(plugin.util.c(plugin.util.MessagePrefix + "&bGame Commands:"));
+					// TBA
+					return true;
+				}
+				
+				if (args[0].equalsIgnoreCase("help") || args[1].equalsIgnoreCase("other"))
+				{
+					p.sendMessage(plugin.util.c(plugin.util.MessagePrefix + "&bOther Commands:"));
+					p.sendMessage(plugin.util.c(plugin.util.MessagePrefix + "&6/mf join <Arena> &8-&e Try to join an arena."));
+					p.sendMessage(plugin.util.c(plugin.util.MessagePrefix + "&6/mf leave &8-&e Leave the game."));
+					p.sendMessage(plugin.util.c(plugin.util.MessagePrefix + "&6/mf reload &8-&e Reload configuration files"));
+					return true;
+				}
 			}
 			
-			p.sendMessage(plugin.util.c(plugin.util.MessagePrefix + "&cInvalid command! Type /mf help for command help."));
+			p.sendMessage(plugin.util.c(plugin.util.MessagePrefix + "&cInvalid command (or wrong syntax)! Type /mf help for command help."));
 			
 		} else {
 			// Comming soon.

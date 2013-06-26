@@ -9,5 +9,7 @@ public class mgr_Database {
 	{
 		this.plugin = instance;
 	}
+	
+	
 
 }
