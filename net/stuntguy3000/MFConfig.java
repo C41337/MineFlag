@@ -22,7 +22,7 @@ public class MFConfig {
 	public void loadOptions()
 	{
 		// MySQL
-		UseMySQL = plugin.getConfig().getBoolean("Vairous.UseMySQL");
+		UseMySQL = plugin.getConfig().getBoolean("MySQL.UseMySQL");
 		Host = plugin.getConfig().getString("MySQL.Host");
 		Name = plugin.getConfig().getString("MySQL.Name");
 		User = plugin.getConfig().getString("MySQL.User");
@@ -30,6 +30,6 @@ public class MFConfig {
 		
 		// Vairous
 		Debug = plugin.getConfig().getBoolean("Vairous.Debug");
-		ShowPermissionNeeded = plugin.getConfig().getBoolean("Vairous.ShowPermissionNeeded");
+		Debug = plugin.getConfig().getBoolean("Vairous.Debug");
 	}
 }

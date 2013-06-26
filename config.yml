@@ -1,5 +1,4 @@
 Vairous:
-    UseMySQL: true
     Debug: false
     ShowPermissionNeeded: true
 MySQL:
@@ -7,3 +6,4 @@ MySQL:
    Name: 'minecraft'
    User: 'root'
    Pass: 'securepassword'
+   UseMySQL: false

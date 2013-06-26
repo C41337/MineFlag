@@ -52,6 +52,7 @@ public class MFCommand implements CommandExecutor {
 					p.sendMessage(plugin.util.c(plugin.util.MessagePrefix + "&bThe help menu is seperated into sections."));
 					p.sendMessage(plugin.util.c(plugin.util.MessagePrefix + "&6/mf help arena &8-&e All arena related commands"));
 					p.sendMessage(plugin.util.c(plugin.util.MessagePrefix + "&6/mf help game &8-&e All game related commands"));
+					p.sendMessage(plugin.util.c(plugin.util.MessagePrefix + "&6/mf help stats &8-&e All stats related commands"));
 					p.sendMessage(plugin.util.c(plugin.util.MessagePrefix + "&6/mf help other &8-&e All other commands"));
 					return true;
 				}
@@ -75,6 +76,14 @@ public class MFCommand implements CommandExecutor {
 				{
 					p.sendMessage(plugin.util.c(plugin.util.MessagePrefix + "&bGame Commands:"));
 					// TBA
+					return true;
+				}
+				
+				if (args[0].equalsIgnoreCase("help") || args[1].equalsIgnoreCase("stats"))
+				{
+					p.sendMessage(plugin.util.c(plugin.util.MessagePrefix + "&bStats Commands:"));
+					p.sendMessage(plugin.util.c(plugin.util.MessagePrefix + "&6/mf stats &8-&e Display your stats"));
+					p.sendMessage(plugin.util.c(plugin.util.MessagePrefix + "&6/mf stats [name]&8-&e Display someone else's stats"));
 					return true;
 				}
 				
