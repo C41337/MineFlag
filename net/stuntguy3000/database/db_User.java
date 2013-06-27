@@ -42,7 +42,7 @@ public class db_User {
 			new BukkitRunnable() {
 	    		public void run() {
 	    			try{
-	    				String query = "";
+	    				String query = "SELECT * FROM `mineflag_users` WHERE `Username`='" + username + "'";
 	    				String connectionUrl = "jdbc:mysql://" + plugin.config.Host + ":3306/" + plugin.config.Name;
 	    				String connectionUser = plugin.config.User;
 	    				String connectionPassword = plugin.config.Pass;
@@ -56,22 +56,19 @@ public class db_User {
 	    				{
 	    					rowCount ++;
 	    					
-	    					uc.set("username", username);
 	    					uc.set("Kills", rs.getInt("Kills"));
 	    					uc.set("Deaths", rs.getInt("Deaths"));
 	    					uc.set("Games", rs.getInt("Games"));
 	    					uc.set("Captures", rs.getInt("Captures"));
 	    				}
 	    				
-	    				if (rowCount > 0)
+	    				if (rowCount == 0)
 	    				{
-	    					uc.set("username", username);
 	    					uc.set("Kills", 0);
 	    					uc.set("Deaths", 0);
 	    					uc.set("Games", 0);
 	    					uc.set("Captures", 0);
 	    					
-	    					// Don't have to insert much... Since the rest is defaulted
 	    					plugin.db_Main.sendQuery("INSERT INTO `plugindev`.`mineflag_users` (`Username`) VALUES ('" + username + "');");
 	    				}
 	    				
@@ -91,6 +88,8 @@ public class db_User {
 	    			}
 	    		}	 
 	    	}.runTask(plugin);
+		} else {
+			
 		}
 	}
 }
