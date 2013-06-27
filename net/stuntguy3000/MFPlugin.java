@@ -1,8 +1,14 @@
 package net.stuntguy3000;
 
+import java.io.File;
+
 import net.stuntguy3000.command.MFCommand;
+import net.stuntguy3000.database.db_Main;
+import net.stuntguy3000.database.db_Stats;
+import net.stuntguy3000.database.db_User;
 import net.stuntguy3000.enums.LogType;
-import net.stuntguy3000.manager.mgr_Database;
+import net.stuntguy3000.events.evt_LoginHandler;
+import net.stuntguy3000.manager.mgr_User;
 
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -11,12 +17,23 @@ public class MFPlugin extends JavaPlugin {
 	
 	public MFUtil util;
 	public MFConfig config;
-	public mgr_Database db;
+	public mgr_User user;
+	
+	public db_Main db_Main;
+	public db_User db_User;
+	public db_Stats db_Stats;
 	
 	public void onEnable() {
 		util = new MFUtil(this);
 		config = new MFConfig(this);
-		db = new mgr_Database(this);
+		user = new mgr_User(this);
+		
+		db_Main = new db_Main(this);
+		db_User = new db_User(this);
+		db_Stats = new db_Stats(this);
+		
+		File dir = new File(getDataFolder() + File.separator + "users"); 
+		dir.mkdirs();
 		
 		config.loadOptions();
 		
@@ -28,13 +45,13 @@ public class MFPlugin extends JavaPlugin {
 		getCommand("mineflag").setExecutor(new MFCommand(this));
 		
 		util.log(LogType.Debug, "Running initial query...");
-		db.sendQuery("CREATE TABLE IF NOT EXISTS `mineflag_arenas` " +
+		db_Main.sendQuery("CREATE TABLE IF NOT EXISTS `mineflag_arenas` " +
 						"( `ArenaName` varchar(256) NOT NULL, " +
 						"`World` varchar(256) NOT NULL, " +
 						"`TotalPlayers` int(10) NOT NULL )" +
 						" ENGINE=InnoDB DEFAULT CHARSET=latin1; ");
 		
-		db.sendQuery("CREATE TABLE IF NOT EXISTS `mineflag_locations` " +
+		db_Main.sendQuery("CREATE TABLE IF NOT EXISTS `mineflag_locations` " +
 				"( `Arena` varchar(256) NOT NULL, " +
 				"`Team` enum('Red','Blue') NOT NULL, " +
 				"`Type` enum('Spawn','TargetBlock') NOT NULL, " +
@@ -44,7 +61,7 @@ public class MFPlugin extends JavaPlugin {
 				"`yaw` double NOT NULL, " +
 				"`pitch` double NOT NULL ) ENGINE=InnoDB DEFAULT CHARSET=latin1; ");
 		
-		db.sendQuery("CREATE TABLE IF NOT EXISTS `mineflag_users` " +
+		db_Main.sendQuery("CREATE TABLE IF NOT EXISTS `mineflag_users` " +
 				"( `ID` int(11) NOT NULL AUTO_INCREMENT, " +
 				"`Username` varchar(16) NOT NULL, " +
 				"`Kills` int(10) NOT NULL, " +
@@ -60,12 +77,12 @@ public class MFPlugin extends JavaPlugin {
 		} else {
 			util.log(LogType.Normal, "MySQL Support disabled.");
 		}
+		
+		Bukkit.getServer().getPluginManager().registerEvents(new evt_LoginHandler(this), this);
 	}
 	
 	public void onDisable() {
 		Bukkit.getScheduler().cancelTasks(this);
 	}
-	
-	
 	
 }
