@@ -1,6 +1,7 @@
 package net.stuntguy3000.database;
 
 import java.io.File;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -89,7 +90,19 @@ public class db_User {
 	    		}	 
 	    	}.runTask(plugin);
 		} else {
-			
+			if (!uf.exists())
+			{
+				try {
+					uc.set("Kills", 0);
+					uc.set("Deaths", 0);
+					uc.set("Games", 0);
+					uc.set("Captures", 0);
+					
+					uc.save(uf);
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
 		}
 	}
 }
