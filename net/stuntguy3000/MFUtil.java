@@ -21,9 +21,10 @@ public class MFUtil {
 	{
 		if (plugin.config.ShowPermissionNeeded)
 		{
-			p.sendMessage(c("&8[&7MineFlag&8] &cYou do not have permission! You need the permission node &8%node&c!".replaceAll("%perm", permission)));
+			p.sendMessage(c(MessagePrefix + "&cYou do not have permission!"));
+			p.sendMessage(c(MessagePrefix + "&cYou need &7%node&c!".replaceAll("%node", permission)));
 		} else {
-			p.sendMessage(c("&8[&7MineFlag&8] &cYou do not have permission!"));
+			p.sendMessage(c(MessagePrefix + "&cYou do not have permission!"));
 		}
 	}
 	

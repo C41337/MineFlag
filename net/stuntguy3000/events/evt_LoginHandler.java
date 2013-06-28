@@ -29,6 +29,10 @@ public class evt_LoginHandler implements Listener {
 	public void PlayerJoinEvent(PlayerJoinEvent event) {
 		Player p = event.getPlayer();
 		
+		if (p.hasPermission("MineFlag.messages.onJoin"))
+		{
+			p.sendMessage(plugin.util.c(plugin.util.MessagePrefix + "&eThis server is running &6MineFlag &eversion &6" + plugin.getDescription().getVersion() + "&e!"));
+		}
 	}
 	
 	@EventHandler
