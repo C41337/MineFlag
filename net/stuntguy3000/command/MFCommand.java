@@ -2,6 +2,7 @@ package net.stuntguy3000.command;
 import net.stuntguy3000.MFPlugin;
 import net.stuntguy3000.enums.LogType;
 import net.stuntguy3000.enums.StatType;
+import net.stuntguy3000.enums.Team;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -97,6 +98,8 @@ public class MFCommand implements CommandExecutor {
 					p.sendMessage(plugin.util.c(" &a- &e&oSet an arena's target block."));
 					p.sendMessage(plugin.util.c(" &6/MineFlag arena setname <ArenaName> <Name>"));
 					p.sendMessage(plugin.util.c(" &a- &e&oChange an Arena's Name."));
+					p.sendMessage(plugin.util.c(" &6/MineFlag arena gotospawn <ArenaName> <Red/Blue>"));
+					p.sendMessage(plugin.util.c(" &a- &e&oTeleport to a team's spawnpoint."));
 					p.sendMessage(plugin.util.c(""));
 					p.sendMessage(plugin.util.c(plugin.util.MessagePrefix + "&cTo full the view list, press your chat key."));
 					return true;
@@ -163,7 +166,9 @@ public class MFCommand implements CommandExecutor {
 					{
 						if (plugin.arena.getArenaList().size() == 0)
 						{
-							p.sendMessage(plugin.util.c(plugin.util.MessagePrefix + "&eThere are no arenas! &6:("));
+							p.sendMessage(plugin.util.c(""));
+							p.sendMessage(plugin.util.c(plugin.util.MessagePrefix + "&eThere are no arenas!"));
+							p.sendMessage(plugin.util.c(plugin.util.MessagePrefix + "&6To create one type /MineFlag arena create [Name]"));
 						} else {
 							p.sendMessage(plugin.util.c(plugin.util.MessagePrefix + "&bArena List &3(" + plugin.arena.getArenaList().size() + ")&b:"));
 							
@@ -222,6 +227,114 @@ public class MFCommand implements CommandExecutor {
 						}
 					} else {
 						plugin.util.noPermission(p, "MineFlag.command.arena.remove");
+					}
+					
+					return true;
+				}
+				
+				if (args[0].equalsIgnoreCase("stats") && args[1].equalsIgnoreCase("clear"))
+				{
+					if (p.hasPermission("MineFlag.command.clearstats"))
+					{
+						if (plugin.stats.exists(args[2]))
+						{
+							plugin.stats.clearStats(args[2]);
+							p.sendMessage(plugin.util.c(plugin.util.MessagePrefix + "&eStats cleared for &6" + args[2] + "&e."));
+						} else {
+							p.sendMessage(plugin.util.c(plugin.util.MessagePrefix + "&eThe user you specified &6(" + args[2] + ") &edoes not exist."));
+						}
+					} else {
+						plugin.util.noPermission(p, "MineFlag.command.clearstats");
+					}
+					
+					return true;
+				}
+			} else if (args.length == 4) {
+				if (args[0].equalsIgnoreCase("arena") && args[1].equalsIgnoreCase("setname"))
+				{
+					if (p.hasPermission("MineFlag.command.arena.setname"))
+					{
+						if (plugin.arena.exists(args[2]))
+						{
+							
+						} else {
+							
+						}
+					} else {
+						plugin.util.noPermission(p, "MineFlag.command.clearstats");
+					}
+					
+					return true;
+				}
+				
+				if (args[0].equalsIgnoreCase("arena") && args[1].equalsIgnoreCase("setspawn"))
+				{
+					if (p.hasPermission("MineFlag.command.arena.setspawn"))
+					{
+						if (plugin.arena.exists(args[2]))
+						{
+							if (args[3].equalsIgnoreCase("Red"))
+							{
+								plugin.arena.setSpawn(Team.Red, args[2], p.getLocation());
+								p.sendMessage(plugin.util.c(plugin.util.MessagePrefix + "&eSpawn for &cRed &eArena &6(" + args[2] + ") &eupdated."));
+							} else if (args[3].equalsIgnoreCase("Blue"))
+							{
+								plugin.arena.setSpawn(Team.Blue, args[2], p.getLocation());
+								p.sendMessage(plugin.util.c(plugin.util.MessagePrefix + "&eSpawn for &9Blue &eArena &6(" + args[2] + ") &eupdated."));
+							} else {
+								p.sendMessage(plugin.util.c(plugin.util.MessagePrefix + "&eInvalid team! Either &cRed &eor &9Blue&e."));
+							}
+						} else {
+							p.sendMessage(plugin.util.c(plugin.util.MessagePrefix + "&eArena &6(" + args[2] + ") &enot found."));
+						}
+					} else {
+						plugin.util.noPermission(p, "MineFlag.command.clearstats");
+					}
+					
+					return true;
+				}
+				
+				if (args[0].equalsIgnoreCase("arena") && args[1].equalsIgnoreCase("gotospawn"))
+				{
+					if (p.hasPermission("MineFlag.command.arena.gotospawn." + args[2]))
+					{
+						if (plugin.arena.exists(args[2]))
+						{
+							if (args[3].equalsIgnoreCase("Red"))
+							{
+								if (plugin.arena.getSpawn(Team.Red, args[2]) != null)
+								{
+									if (plugin.arena.getSpawn(Team.Red, args[2]).getWorld() != null)
+									{
+										p.teleport(plugin.arena.getSpawn(Team.Red, args[2]));
+										p.sendMessage(plugin.util.c(plugin.util.MessagePrefix + "&eYou are now at &cRed&e's spawn in &6" + args[2]));
+									} else {
+										p.sendMessage(plugin.util.c(plugin.util.MessagePrefix + "&cError: World &4" + plugin.arena.getSpawn(Team.Red, args[2]).getWorld().getName() + " &cis invalid!"));
+									}
+								} else {
+									p.sendMessage(plugin.util.c(plugin.util.MessagePrefix + "&cNo spawn is set!"));
+								}
+							} else if (args[3].equalsIgnoreCase("Blue")) {
+								if (plugin.arena.getSpawn(Team.Blue, args[2]) != null)
+								{
+									if (plugin.arena.getSpawn(Team.Blue, args[2]).getWorld() != null)
+									{
+										p.teleport(plugin.arena.getSpawn(Team.Blue, args[2]));
+										p.sendMessage(plugin.util.c(plugin.util.MessagePrefix + "&eYou are now at &9Blue&e's spawn in &6" + args[2]));
+									} else {
+										p.sendMessage(plugin.util.c(plugin.util.MessagePrefix + "&cError: World &4" + plugin.arena.getSpawn(Team.Red, args[2]).getWorld().getName() + " &cis invalid!"));
+									}
+								} else {
+									p.sendMessage(plugin.util.c(plugin.util.MessagePrefix + "&cNo spawn is set!"));
+								}
+							} else {
+								p.sendMessage(plugin.util.c(plugin.util.MessagePrefix + "&eInvalid team! Either &cRed &eor &9Blue&e."));
+							}
+						} else {
+							p.sendMessage(plugin.util.c(plugin.util.MessagePrefix + "&eArena &6(" + args[2] + ") &enot found."));
+						}
+					} else {
+						plugin.util.noPermission(p, "MineFlag.command.clearstats");
 					}
 					
 					return true;

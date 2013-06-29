@@ -47,6 +47,22 @@ public class mgr_Stats {
 		}
 	}
 	
+	public void clearStats(String username)
+	{
+		File uf = new File(plugin.getDataFolder() + File.separator + "users", username + ".yml");
+		YamlConfiguration uc = YamlConfiguration.loadConfiguration(uf);
+		
+		try {
+			uc.set("Kills", 0);
+			uc.set("Deaths", 0);
+			uc.set("Games", 0);
+			uc.set("Captures", 0);
+			uc.save(uf);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
 	public Boolean exists(String username)
 	{
 		File uf = new File(plugin.getDataFolder() + File.separator + "users", username + ".yml");

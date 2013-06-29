@@ -21,7 +21,6 @@ public class mgr_Arena {
 		this.plugin = instance;
 	}
 	
-	@SuppressWarnings("null")
 	public Location getSpawn(Team team, String arena)
 	{
 		File af = new File(plugin.getDataFolder() + File.separator + "arenas.yml");
@@ -33,7 +32,12 @@ public class mgr_Arena {
 			return null;
 		}
 		
-		Location spawn = null;
+		if (ac.getString(arena + ".Spawns." + team.name() + ".world") == null)
+		{
+			return null;
+		}
+		
+		Location spawn = new Location(null, 1, 1, 1);
 		
 		spawn.setX(ac.getInt(arena + ".Spawns." + team.name() + ".x"));
 		spawn.setY(ac.getInt(arena + ".Spawns." + team.name() + ".y"));
