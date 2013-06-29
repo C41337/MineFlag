@@ -161,11 +161,11 @@ public class MFCommand implements CommandExecutor {
 				{
 					if (p.hasPermission("MineFlag.command.arena.list"))
 					{
-						if (plugin.arena.getArenaList() == null)
+						if (plugin.arena.getArenaList().size() == 0)
 						{
 							p.sendMessage(plugin.util.c(plugin.util.MessagePrefix + "&eThere are no arenas! &6:("));
 						} else {
-							p.sendMessage(plugin.util.c(plugin.util.MessagePrefix + "&bArena List:"));
+							p.sendMessage(plugin.util.c(plugin.util.MessagePrefix + "&bArena List &3(" + plugin.arena.getArenaList().size() + ")&b:"));
 							
 							String Arenas = "";
 							int Count = 0;
@@ -176,7 +176,7 @@ public class MFCommand implements CommandExecutor {
 								
 								if (Count == plugin.arena.getArenaList().size())
 								{
-									Arenas = Arenas + name;
+									Arenas = Arenas + name + "&8.";
 								} else {
 									Arenas = Arenas + name + "&8, &7";
 								}
@@ -191,7 +191,41 @@ public class MFCommand implements CommandExecutor {
 					return true;
 				}
 			} else if (args.length == 3) {
+				if (args[0].equalsIgnoreCase("arena") && args[1].equalsIgnoreCase("create"))
+				{
+					if (p.hasPermission("MineFlag.command.arena.create"))
+					{
+						if (plugin.arena.exists(args[2]))
+						{
+							p.sendMessage(plugin.util.c(plugin.util.MessagePrefix + "&eArena &6(" + args[2] + ") &ealready exists!"));
+						} else {
+							plugin.arena.createArena(args[2]);
+							p.sendMessage(plugin.util.c(plugin.util.MessagePrefix + "&eArena &6(" + args[2] + ") &ecreated."));
+						}
+					} else {
+						plugin.util.noPermission(p, "MineFlag.command.arena.create");
+					}
+					
+					return true;
+				}
 				
+				if (args[0].equalsIgnoreCase("arena") && args[1].equalsIgnoreCase("remove"))
+				{
+					if (p.hasPermission("MineFlag.command.arena.remove"))
+					{
+						if (plugin.arena.exists(args[2]))
+						{
+							plugin.arena.removeArena(args[2]);
+							p.sendMessage(plugin.util.c(plugin.util.MessagePrefix + "&eArena &6(" + args[2] + ") &eremoved."));
+						} else {
+							p.sendMessage(plugin.util.c(plugin.util.MessagePrefix + "&eArena &6(" + args[2] + ") &enot found."));
+						}
+					} else {
+						plugin.util.noPermission(p, "MineFlag.command.arena.remove");
+					}
+					
+					return true;
+				}
 			}
 			
 			p.sendMessage(plugin.util.c(plugin.util.MessagePrefix + "&cInvalid command (or wrong syntax)! Type /MineFlag help for command help."));
