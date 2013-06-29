@@ -1,0 +1,31 @@
+Example:
+    Spawns:
+        Red:
+            x: 100
+            y: 100
+            z: 100
+            yaw: 100
+            pitch: 1337
+            world: GameWorld
+        Blue:
+            x: 100
+            y: 100
+            z: 100
+            yaw: 100
+            pitch: 1337
+            world: GameWorld
+    TargetBlock:
+        Red:
+            x: 100
+            y: 100
+            z: 100
+            yaw: 100
+            pitch: 1337
+            world: GameWorld
+        Blue:
+            x: 100
+            y: 100
+            z: 100
+            yaw: 100
+            pitch: 1337
+            world: GameWorld  
