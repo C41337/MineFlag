@@ -8,3 +8,8 @@ commands:
     MineFlag:
         description: MineFlag Main Command. Use /mf help for help.
         aliases: [mf]
+permissions:
+    MineFlag.messages.onJoin:
+        default: true
+    MineFlag.command.stats:
+        default: true

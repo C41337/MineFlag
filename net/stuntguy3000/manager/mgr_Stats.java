@@ -46,5 +46,12 @@ public class mgr_Stats {
 			e.printStackTrace();
 		}
 	}
+	
+	public Boolean exists(String username)
+	{
+		File uf = new File(plugin.getDataFolder() + File.separator + "users", username + ".yml");
+		
+		return uf.exists();
+	}
 }
 

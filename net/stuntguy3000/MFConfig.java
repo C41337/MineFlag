@@ -1,9 +1,5 @@
 package net.stuntguy3000;
 
-import java.io.File;
-
-import org.bukkit.configuration.file.YamlConfiguration;
-
 public class MFConfig {
 	public MFPlugin plugin;
 	
@@ -25,9 +21,6 @@ public class MFConfig {
 	
 	public void loadOptions()
 	{
-		File uf = new File(plugin.getDataFolder() + "config.yml");
-		YamlConfiguration uc = YamlConfiguration.loadConfiguration(uf);
-		
 		// MySQL
 		UseMySQL = plugin.getConfig().getBoolean("MySQL.UseMySQL");
 		Host = plugin.getConfig().getString("MySQL.Host");

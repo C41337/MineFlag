@@ -1,13 +1,11 @@
 package net.stuntguy3000.command;
-import java.io.File;
-
 import net.stuntguy3000.MFPlugin;
 import net.stuntguy3000.enums.LogType;
+import net.stuntguy3000.enums.StatType;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
-import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 
 public class MFCommand implements CommandExecutor {
@@ -64,14 +62,11 @@ public class MFCommand implements CommandExecutor {
 				{
 					if (p.hasPermission("MineFlag.Command.Stats"))
 					{
-						File uf = new File(plugin.getDataFolder() + File.separator + "users", p.getName() + ".yml");
-						YamlConfiguration uc = YamlConfiguration.loadConfiguration(uf);
-						
 						p.sendMessage(plugin.util.c(plugin.util.MessagePrefix + "&6====== &eYour Stats &6======"));
-						p.sendMessage(plugin.util.c(plugin.util.MessagePrefix + "&6Kills: &e" + uc.getInt("Kills")));
-						p.sendMessage(plugin.util.c(plugin.util.MessagePrefix + "&6Deaths: &e" + uc.getInt("Deaths")));
-						p.sendMessage(plugin.util.c(plugin.util.MessagePrefix + "&6Games: &e" + uc.getInt("Games")));
-						p.sendMessage(plugin.util.c(plugin.util.MessagePrefix + "&6Captures: &e" + uc.getInt("Captures")));
+						p.sendMessage(plugin.util.c(plugin.util.MessagePrefix + "&6Kills: &e" + plugin.stats.getStats(StatType.Kills, p.getName())));
+						p.sendMessage(plugin.util.c(plugin.util.MessagePrefix + "&6Deaths: &e" + plugin.stats.getStats(StatType.Deaths, p.getName())));
+						p.sendMessage(plugin.util.c(plugin.util.MessagePrefix + "&6Games: &e" + plugin.stats.getStats(StatType.Games, p.getName())));
+						p.sendMessage(plugin.util.c(plugin.util.MessagePrefix + "&6Captures: &e" + plugin.stats.getStats(StatType.Captures, p.getName())));
 					} else {
 						plugin.util.noPermission(p, "MineFlag.Command.Stats");
 					}
@@ -86,7 +81,6 @@ public class MFCommand implements CommandExecutor {
 				}
 			} else if (args.length == 2)
 			{
-				//Here we go! - Help
 				if (args[0].equalsIgnoreCase("help") && args[1].equalsIgnoreCase("arena"))
 				{
 					p.sendMessage(plugin.util.c(""));
@@ -95,18 +89,14 @@ public class MFCommand implements CommandExecutor {
 					p.sendMessage(plugin.util.c(" &a- &e&oCreate an arena."));
 					p.sendMessage(plugin.util.c(" &6/MineFlag arena remove <ArenaName>"));
 					p.sendMessage(plugin.util.c(" &a- &e&oRemove an arena."));
-					p.sendMessage(plugin.util.c(" &6/MineFlag arena listList all the arenas."));
-					p.sendMessage(plugin.util.c(" &a- &e&oRemove an arena."));
+					p.sendMessage(plugin.util.c(" &6/MineFlag arena list"));
+					p.sendMessage(plugin.util.c(" &a- &e&oList all the arenas"));
 					p.sendMessage(plugin.util.c(" &6/MineFlag arena setspawn <ArenaName> <Red/Blue>"));
 					p.sendMessage(plugin.util.c(" &a- &e&oSet an arena's team spawn point."));
 					p.sendMessage(plugin.util.c(" &6/MineFlag arena setblock <ArenaName> <Red/Blue>"));
 					p.sendMessage(plugin.util.c(" &a- &e&oSet an arena's target block."));
 					p.sendMessage(plugin.util.c(" &6/MineFlag arena setname <ArenaName> <Name>"));
 					p.sendMessage(plugin.util.c(" &a- &e&oChange an Arena's Name."));
-					p.sendMessage(plugin.util.c(" &6/MineFlag arena check <ArenaName>"));
-					p.sendMessage(plugin.util.c(" &a- &e&oView an arena's information."));
-					p.sendMessage(plugin.util.c(" &6/MineFlag arena set <ArenaName> <Setting> <Value>"));
-					p.sendMessage(plugin.util.c(" &a- &e&oChange an Arena's settings."));
 					p.sendMessage(plugin.util.c(""));
 					p.sendMessage(plugin.util.c(plugin.util.MessagePrefix + "&cTo full the view list, press your chat key."));
 					return true;
@@ -143,6 +133,65 @@ public class MFCommand implements CommandExecutor {
 					p.sendMessage(plugin.util.c(" &a- &e&oLeave a game."));
 					return true;
 				}
+				
+				if (args[0].equalsIgnoreCase("stats"))
+				{
+					if (p.hasPermission("MineFlag.command.stats.other." + args[1]))
+					{
+						if (plugin.stats.exists(args[1]))
+						{
+							p.sendMessage(plugin.util.c(plugin.util.MessagePrefix + "&6====== &e" + args[1] + "'s Stats &6======"));
+							p.sendMessage(plugin.util.c(plugin.util.MessagePrefix + "&6Kills: &e" + plugin.stats.getStats(StatType.Kills, args[1])));
+							p.sendMessage(plugin.util.c(plugin.util.MessagePrefix + "&6Deaths: &e" + plugin.stats.getStats(StatType.Deaths, args[1])));
+							p.sendMessage(plugin.util.c(plugin.util.MessagePrefix + "&6Games: &e" + plugin.stats.getStats(StatType.Games, args[1])));
+							p.sendMessage(plugin.util.c(plugin.util.MessagePrefix + "&6Captures: &e" + plugin.stats.getStats(StatType.Captures, args[1])));
+						
+						} else {
+							p.sendMessage(plugin.util.c(plugin.util.MessagePrefix + "&eThe user you specified &6(" + args[1] + ") &ehas never joined the server!"));
+						}
+						
+						
+					} else {
+						plugin.util.noPermission(p, "MineFlag.command.stats.other.");
+					}
+					return true;
+				}
+				
+				if (args[0].equalsIgnoreCase("arena") && args[1].equalsIgnoreCase("list"))
+				{
+					if (p.hasPermission("MineFlag.command.arena.list"))
+					{
+						if (plugin.arena.getArenaList() == null)
+						{
+							p.sendMessage(plugin.util.c(plugin.util.MessagePrefix + "&eThere are no arenas! &6:("));
+						} else {
+							p.sendMessage(plugin.util.c(plugin.util.MessagePrefix + "&bArena List:"));
+							
+							String Arenas = "";
+							int Count = 0;
+							
+							for (String name : plugin.arena.getArenaList())
+							{
+								Count ++;
+								
+								if (Count == plugin.arena.getArenaList().size())
+								{
+									Arenas = Arenas + name;
+								} else {
+									Arenas = Arenas + name + "&8, &7";
+								}
+							}
+							
+							p.sendMessage(plugin.util.c(plugin.util.MessagePrefix + "&7" + Arenas));
+						}
+					} else {
+						plugin.util.noPermission(p, "MineFlag.command.arena.list");
+					}
+					
+					return true;
+				}
+			} else if (args.length == 3) {
+				
 			}
 			
 			p.sendMessage(plugin.util.c(plugin.util.MessagePrefix + "&cInvalid command (or wrong syntax)! Type /MineFlag help for command help."));
@@ -185,7 +234,6 @@ public class MFCommand implements CommandExecutor {
 				}
 			} else if (args.length == 2)
 			{
-				//Here we go! - Help
 				if (args[0].equalsIgnoreCase("help") && args[1].equalsIgnoreCase("arena"))
 				{
 					plugin.util.log(LogType.Normal, "");
@@ -194,7 +242,7 @@ public class MFCommand implements CommandExecutor {
 					plugin.util.log(LogType.Normal, " - Create an arena.");
 					plugin.util.log(LogType.Normal, " /MineFlag arena remove <ArenaName>");
 					plugin.util.log(LogType.Normal, " - Remove an arena.");
-					plugin.util.log(LogType.Normal, " /MineFlag arena listList all the arenas.");
+					plugin.util.log(LogType.Normal, " /MineFlag arena list");
 					plugin.util.log(LogType.Normal, " - Remove an arena.");
 					plugin.util.log(LogType.Normal, " /MineFlag arena setspawn <ArenaName> <Red/Blue>");
 					plugin.util.log(LogType.Normal, " - Set an arena's team spawn point.");

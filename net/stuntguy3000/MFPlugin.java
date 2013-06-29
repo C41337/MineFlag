@@ -8,6 +8,9 @@ import net.stuntguy3000.database.db_Stats;
 import net.stuntguy3000.database.db_User;
 import net.stuntguy3000.enums.LogType;
 import net.stuntguy3000.events.evt_LoginHandler;
+import net.stuntguy3000.manager.mgr_Arena;
+import net.stuntguy3000.manager.mgr_Game;
+import net.stuntguy3000.manager.mgr_Stats;
 import net.stuntguy3000.manager.mgr_User;
 
 import org.bukkit.Bukkit;
@@ -17,7 +20,11 @@ public class MFPlugin extends JavaPlugin {
 	
 	public MFUtil util;
 	public MFConfig config;
+	
 	public mgr_User user;
+	public mgr_Game game;
+	public mgr_Arena arena;
+	public mgr_Stats stats;
 	
 	public db_Main db_Main;
 	public db_User db_User;
@@ -27,6 +34,9 @@ public class MFPlugin extends JavaPlugin {
 		util = new MFUtil(this);
 		config = new MFConfig(this);
 		user = new mgr_User(this);
+		game = new mgr_Game(this);
+		arena = new mgr_Arena(this);
+		stats = new mgr_Stats(this);
 		
 		db_Main = new db_Main(this);
 		db_User = new db_User(this);
@@ -34,6 +44,13 @@ public class MFPlugin extends JavaPlugin {
 		
 		File dir = new File(getDataFolder() + File.separator + "users"); 
 		dir.mkdirs();
+		
+		File ArenasFile = new File(getDataFolder() + "/arenas.yml"); 
+		
+		if (!ArenasFile.exists())
+		{
+			saveResource("arenas.yml", true);
+		}
 		
 		config.loadOptions();
 		
