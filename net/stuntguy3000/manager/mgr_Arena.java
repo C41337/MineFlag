@@ -94,11 +94,29 @@ public class mgr_Arena {
 		return r;
 	}
 	
-	public void createArena()
+	public void createArena(String arena)
 	{
 		File af = new File(plugin.getDataFolder() + File.separator + "arenas.yml");
 		YamlConfiguration ac = YamlConfiguration.loadConfiguration(af);
 		
+		try {
+			ac.set(arena + ".Valid", true);
+			ac.save(af);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void removeArena(String arena)
+	{
+		File af = new File(plugin.getDataFolder() + File.separator + "arenas.yml");
+		YamlConfiguration ac = YamlConfiguration.loadConfiguration(af);
 		
+		try {
+			ac.set(arena, null);
+			ac.save(af);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 }

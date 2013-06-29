@@ -1,6 +1,7 @@
 package net.stuntguy3000;
 
 import java.io.File;
+import java.io.IOException;
 
 import net.stuntguy3000.command.MFCommand;
 import net.stuntguy3000.database.db_Main;
@@ -31,6 +32,13 @@ public class MFPlugin extends JavaPlugin {
 	public db_Stats db_Stats;
 	
 	public void onEnable() {
+		try {
+		    Metrics metrics = new Metrics(this);
+		    metrics.start();
+		} catch (IOException e) {
+		    // Failed to submit the stats :-(
+		}
+		
 		util = new MFUtil(this);
 		config = new MFConfig(this);
 		user = new mgr_User(this);
